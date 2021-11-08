@@ -14,8 +14,8 @@ We will be using the SNAP Wikispeedia navigation paths dataset from Stanford, wh
 We will be using BFS (Breadth First Search) for our traversal algorithm, the Dijkstra's Algorithm (a shortest path algorithm), and the betweeness centrality algorithm to identify nodes that will be used as the "center" of numerous paths. For the BFS and Dijkstra's method, we expect our input to be our starting node and end/goal node. The output would be the shortest path from the starting to end node. The time complexity of BFS would be O(E + V) and Dijkstra's is O(E + VlogV). For the betweeness centrality method, our input would be the hashmap that maps each article to links that article contains which links to other articles. Our output would be a list of nodes that are the most common in paths taken from starting nodes to end nodes. Our graph will be unwiehgted, which means we will be using Brandes' algorithm which has O(|E||V|) time complexity.    
 
 ### Timeline
-Week 1 (Nov 8 - 14) - Acquire and understand dataset, begin implementing data processing method
-Week 2 (Nov 15 - 21) - Finish implementing BFS function
-Week 3 (Nov 22 - 28) - Finish implementing Dijkstra's function
-Week 4 (Nov 29 - Dec 5) - Finish implementing betweeness centrality function, prepare for Mid-Project checkin
-Week 5 (Dec 6 - 13) - Finish final project deliverables (commenting/cleaning codebase, written report, and presentation)
+- Week 1 (Nov 8 - 14) - Acquire and understand dataset, begin implementing data processing method
+- Week 2 (Nov 15 - 21) - Finish implementing BFS function
+- Week 3 (Nov 22 - 28) - Finish implementing Dijkstra's function
+- Week 4 (Nov 29 - Dec 5) - Finish implementing betweeness centrality function, prepare for Mid-Project checkin
+- Week 5 (Dec 6 - 13) - Finish final project deliverables (commenting/cleaning codebase, written report, and presentation)
