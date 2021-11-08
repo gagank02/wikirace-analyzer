@@ -37,4 +37,4 @@ I, firstname lastname (netID) agree to the terms of this contract. <br>
 I, Sarah Zimmerman (sarahrz2) agree to the terms of this contract. <br>
 I, Gagan Kadadevarmath (gagan2) agree to the terms of this contract. <br>
 I, Ritvik Gandesiri (ritvikg2) agree to the terms of this contract. <br>
-I, Sanjiv Iyer (sanjivi2) agree to the terms of this contract <br>
+I, Sanjiv Iyer (sanjivi2) agree to the terms of this contract. <br>
