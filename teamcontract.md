@@ -33,7 +33,6 @@ All conflicts in the group will be resolved by a game of Wiki Races. The winner 
 
 ### Signatures
 
-I, firstname lastname (netID) agree to the terms of this contract. <br>
 I, Sarah Zimmerman (sarahrz2) agree to the terms of this contract. <br>
 I, Gagan Kadadevarmath (gagan2) agree to the terms of this contract. <br>
 I, Ritvik Gandesiri (ritvikg2) agree to the terms of this contract. <br>
