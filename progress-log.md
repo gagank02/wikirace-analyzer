@@ -1,0 +1,4 @@
+# Weekly Progress Log
+
+## November 21-28
+Our final project proposal was approved on November 27th and we began implementing the classes we need as well as parsing our dataset. We created and used a Python script to format our dataset into a simpler format and saved it to a txt file. We then used that txt file to create an adjacency list for our graph. We also created our Makefile to be able to compile and run our createAdjacencyList method in main.cpp. After testing the function in the terminal, we found that out function creates an adjaceny list correctly for our graph. We will begin working on the BFS traversal method and aim to finish that fairly quickly so that we can begin work on the Kosaraju function.

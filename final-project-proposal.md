@@ -16,6 +16,6 @@ We will be using a BFS (Breadth First Search) for our traversal algorithm, Kosar
 ### Timeline
 - Week 1 (Nov 8 - 14) - Acquire and understand dataset, begin implementing data processing method
 - Week 2 (Nov 15 - 21) - Finish implementing BFS function
-- Week 3 (Nov 22 - 28) - Finish implementing Dijkstra's function
+- Week 3 (Nov 22 - 28) - Finish implementing Kosaraju's function
 - Week 4 (Nov 29 - Dec 5) - Finish implementing betweeness centrality function, prepare for Mid-Project checkin
 - Week 5 (Dec 6 - 13) - Finish final project deliverables (commenting/cleaning codebase, written report, and presentation)
