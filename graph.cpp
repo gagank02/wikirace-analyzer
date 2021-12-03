@@ -27,30 +27,31 @@ void Graph::createAdjacencyList(string filepath) {
         // cout << "value: " << value << endl;
 
 
-        Node keyNode;
-        keyNode.data_ = key;
-        Node valueNode;
-        valueNode.data_ = value;
+        // Node keyNode;
+        // keyNode.data_ = key;
+        // Node valueNode;
+        // valueNode.data_ = value;
         
-        addNode(keyNode);
-        addNode(valueNode);
-        addEdge(keyNode, valueNode);
+        addNode(key);
+        addNode(value);
+        addEdge(key, value);
     }
 }
 
 void Graph::addNode(Node node) {
     adjacency_list_.insert({node, vector<Edge>(0)});
 
-    // cout << "Adding node: " << node.data_ << endl;
+    // cout << "Adding node: " << node << endl;
     // cout << "# keys: " << adjacency_list_.size() << endl;
 }
 
 void Graph::addEdge(Node start, Node end) {
-    // cout << "Edge start: " << start.data_ << endl;
-    // cout << "Edge end: " << end.data_ << endl;
+    // cout << "Edge start: " << start << endl;
+    // cout << "Edge end: " << end << endl;
     vector<Edge> & edges = adjacency_list_.at(start);
     for (Edge edge : edges) {
-        if (edge.end_.data_ == end.data_) {
+        if (edge.end_ == end) {
+            cout << "return" << endl;
             return;
         }
     }
@@ -61,10 +62,14 @@ void Graph::addEdge(Node start, Node end) {
     edges.push_back(edge);
 }
 
-map<Graph::Node, vector<Graph::Edge>> Graph::getMap() {
+map<Graph::Node, vector<Graph::Edge>> & Graph::getAdjacencyList() {
     return adjacency_list_;
 }
 
-bool Graph::Node::operator<(const Node & other) const {
-    return data_ < other.data_;
-}
+// bool Graph::Node::operator<(const Node & other) const {
+//     return data_ < other.data_;
+// }
+
+// bool Graph::Node::operator!=(const Node & other) const {
+//     return data_ != other.data_;
+// }

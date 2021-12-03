@@ -8,22 +8,18 @@ using namespace std;
 
 class Graph {
     public:
-        struct Node {
-            string data_;
-            bool operator<(const Node &) const;
-        };
+        typedef string Node;
 
         struct Edge {
             Node start_;
             Node end_;
         };
 
-
         Graph(string filepath);
 
         void createAdjacencyList(string filepath);
 
-        map<Node, vector<Edge>> getMap();
+        map<Node, vector<Edge>> & getAdjacencyList();
 
     private:
         map<Node, vector<Edge>> adjacency_list_;
