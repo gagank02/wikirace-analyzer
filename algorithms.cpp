@@ -6,7 +6,8 @@
 
 using namespace std;
 
-void BFSTraversal(Graph::Node start, map<Graph::Node, vector<Graph::Edge>> & adj_list, map<Graph::Node, bool> & visited, vector<Graph::Node> &result) {
+vector<Graph::Node> BFSTraversal(Graph::Node start, map<Graph::Node, vector<Graph::Edge>> & adj_list, map<Graph::Node, bool> & visited) {
+    vector<Graph::Node> result;
     queue<Graph::Node> q;
     q.push(start);
     visited.at(start) = true;
@@ -22,21 +23,22 @@ void BFSTraversal(Graph::Node start, map<Graph::Node, vector<Graph::Edge>> & adj
             }
         }
     }
+    return result;
 }
 
-vector<Graph::Node> BFSTraversal(Graph::Node start, Graph * graph) {
+vector<vector<Graph::Node>> BFSTraversal(Graph::Node start, Graph * graph) {
     map<Graph::Node, bool> visited;
     map<Graph::Node, vector<Graph::Edge>> adj_list = graph->getAdjacencyList();
     for (auto it = adj_list.begin(); it != adj_list.end(); ++it) {
         visited.insert({it->first, false});
     }
 
-    vector<Graph::Node> result;
-    BFSTraversal(start, adj_list, visited, result);
+    vector<vector<Graph::Node>> result;
+    result.push_back(BFSTraversal(start, adj_list, visited));
 
     for (auto it = visited.begin(); it != visited.end(); ++it) {
         if (!(it->second)) {
-            BFSTraversal(it->first, adj_list, visited, result);
+            result.push_back(BFSTraversal(it->first, adj_list, visited));
         }
     }
     
@@ -121,3 +123,68 @@ void DFS(Graph::Node node, stack<Graph::Node> & s, map<Graph::Node, vector<Graph
         s.push(node);
     }
 }
+
+map<Graph::Node, float> betweennessCentrality(Graph * graph) {
+    map<Graph::Node, float> betweenness;
+    map<Graph::Node, vector<Graph::Edge>> adj_list = graph->getAdjacencyList();
+    for (auto it = adj_list.begin(); it != adj_list.end(); ++it) {
+        betweenness.insert({it->first, 0.0});
+    }
+    int num_paths = 0;
+    for (auto start = betweenness.begin(); start != betweenness.end(); ++start) {
+        map<Graph::Node, vector<Graph::Node>> paths_from = shortestPath(start->first, graph);
+        for (auto it = paths_from.begin(); it != paths_from.end(); ++it) {
+            if (it->second.size() == 2) {
+                num_paths++;
+            } else if (it->second.size() > 2) {
+                num_paths++;
+                for (unsigned index = 1; index < it->second.size() - 1; index++) {
+                    betweenness.at(it->second[index])++;
+                }
+            }
+        }
+    }
+
+    for (auto start = betweenness.begin(); start != betweenness.end(); ++start) {
+        start->second /= num_paths;
+    }
+    return betweenness;
+}   
+
+map<Graph::Node, vector<Graph::Node>> shortestPath(Graph::Node start, Graph * graph){
+    map<Graph::Node, bool> visited;
+    map<Graph::Node, vector<Graph::Edge>> adj_list = graph->getAdjacencyList();
+    vector<Graph::Node> path;
+    map<Graph::Node, vector<Graph::Node>> all_paths;
+    for (auto it = adj_list.begin(); it != adj_list.end(); ++it) {
+        visited.insert({it->first, false});
+        all_paths.insert({it->first, vector<Graph::Node>()});
+    }
+    
+    queue<Graph::Node> q;
+    q.push(start);
+    visited.at(start) = true;
+    
+    while (!q.empty()) {
+        Graph::Node curr = q.front();
+        q.pop();
+        for (size_t i = 0; i < adj_list.at(curr).size(); i++) {
+            if (!visited.at(adj_list.at(curr)[i].end_)) {
+                visited.at(adj_list.at(curr)[i].end_) = true;
+                q.push(adj_list.at(curr)[i].end_);
+                for (unsigned j = 0 ; j < all_paths.at(curr).size(); j++) {
+                    all_paths.at(adj_list.at(curr)[i].end_).push_back(all_paths.at(curr)[j]);
+                }
+                all_paths.at(adj_list.at(curr)[i].end_).push_back(curr);
+            }
+        }
+    }
+
+    for (auto it = all_paths.begin(); it != all_paths.end(); ++it) {
+        if (it->second.size() > 0) {
+            it->second.push_back(it->first);
+        }
+    }
+    return all_paths;
+}
+

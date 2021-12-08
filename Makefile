@@ -39,6 +39,12 @@ main.o : main.cpp graph.o algorithms.o outputs
 outputs:
 	mkdir -p Outputs
 
+test : output_msg tests.o graph.o algorithms.o
+	$(LD) tests.o graph.o algorithms.o $(LDFLAGS) -o test
+
+tests.o : tests/tests.cpp tests/catch.hpp
+	$(CXX) $(CXXFLAGS) tests/tests.cpp	
+
 graph.o: graph.h graph.cpp
 	$(CXX) $(CXXFLAGS) graph.cpp
 
@@ -48,4 +54,4 @@ algorithms.o: algorithms.h algorithms.cpp
 .PHONY : output_msg
 
 clean:
-	-rm -f *.o $(EXENAME) ./Outputs/*
+	-rm -f *.o $(EXE) test ./Outputs/*

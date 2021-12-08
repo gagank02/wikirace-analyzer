@@ -51,7 +51,6 @@ void Graph::addEdge(Node start, Node end) {
     vector<Edge> & edges = adjacency_list_.at(start);
     for (Edge edge : edges) {
         if (edge.end_ == end) {
-            cout << "return" << endl;
             return;
         }
     }
