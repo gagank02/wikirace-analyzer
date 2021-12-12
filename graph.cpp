@@ -2,6 +2,9 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <utility>
+#include <algorithm>
+#include <stdexcept>
 
 using namespace std;
 
@@ -13,24 +16,20 @@ void Graph::createAdjacencyList(string filepath) {
     ifstream infile(filepath);
 
     if (!infile) {
-        cout << "Error during parsing" << endl;
+        throw std::invalid_argument( "Error during parsing" );
     }
 
     string line;
     string delimiter = ",";
     while (getline(infile, line)) {
         size_t pos = line.find(delimiter);
+
+        if (pos == string::npos) {
+            throw std::invalid_argument( "Malformed data" );
+        }
+
         string key = line.substr(0, line.find(delimiter));
         string value = line.substr(line.find(delimiter) + 1, line.length());
-
-        // cout << "key: " << key << endl;
-        // cout << "value: " << value << endl;
-
-
-        // Node keyNode;
-        // keyNode.data_ = key;
-        // Node valueNode;
-        // valueNode.data_ = value;
         
         addNode(key);
         addNode(value);
@@ -65,10 +64,16 @@ map<Graph::Node, vector<Graph::Edge>> & Graph::getAdjacencyList() {
     return adjacency_list_;
 }
 
-// bool Graph::Node::operator<(const Node & other) const {
-//     return data_ < other.data_;
-// }
-
-// bool Graph::Node::operator!=(const Node & other) const {
-//     return data_ != other.data_;
-// }
+void Graph::printGraph(std::ostream& output) {
+    for (auto pair : adjacency_list_) {
+        output << pair.first << ": ";
+        for (auto it = pair.second.begin(); it != pair.second.end(); ++it) {
+            if (std::next(it) != pair.second.end()) {
+                output << it->end_ << " ";
+            } else {
+                output << it->end_;
+            }
+        }
+        output << endl;
+    }
+}

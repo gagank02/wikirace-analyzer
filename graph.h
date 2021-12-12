@@ -13,9 +13,16 @@ class Graph {
         struct Edge {
             Node start_;
             Node end_;
+            bool operator== (const Edge& other) const {
+                return start_ == other.start_ && end_ == other.end_;
+            }
         };
 
         Graph(string filepath);
+
+        // Need to add destructor and/or big 3
+
+        void printGraph(std::ostream& output);
 
         void createAdjacencyList(string filepath);
 

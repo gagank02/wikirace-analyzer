@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, const char** argv) {
     // Graph * g = new Graph("./data/test_bfs_small_data.txt");
-    Graph * g = new Graph("./data/test_betweenness_data.txt");
+    // Graph * g = new Graph("./data/test_betweenness_data.txt");
     // cout << "Adj list size: " << g->getAdjacencyList().size() << endl;
     //vector<vector<Graph::Node>> bfs = BFSTraversal("0", g);
     //cout << "bfs size: " << bfs.size() << endl;
@@ -41,13 +41,24 @@ int main(int argc, const char** argv) {
     //     cout << "End Path" << endl;
     // }
 
-    map<Graph::Node, float> between = betweennessCentrality(g);
-    for (auto it = between.begin(); it != between.end(); ++it) {
-        cout << "Value of " << it->first << ": " << it->second << endl;
-    }
+    // map<Graph::Node, float> between = betweennessCentrality(g);
+    // for (auto it = between.begin(); it != between.end(); ++it) {
+    //     cout << "Value of " << it->first << ": " << it->second << endl;
+    // }
 
     
     //map<Graph::Node, float> between = betweennessCentrality(g);
+    
+    Graph * g = new Graph("./tests/test_data_single.txt");
+    // g->printGraph(std::cout);
+    vector<vector<Graph::Node>> k = kosaraju(g);
+    for (auto v : k) {
+        for (Graph::Node node : v) {
+            cout << node << " ";
+        }
+        cout << endl;
+    }
+
 
     return 0;
 }

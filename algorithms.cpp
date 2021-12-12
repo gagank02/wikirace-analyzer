@@ -3,6 +3,7 @@
 #include <queue>
 
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -58,6 +59,13 @@ vector<vector<Graph::Node>> BFSTraversal(Graph::Node start, Graph * graph) {
 
     map<Graph::Node, bool> reverse_visited;
     map<Graph::Node, vector<Graph::Edge>> reverse_adj_list = reverseAdjacencyList(adj_list);
+    // for (auto it = reverse_adj_list.begin(); it != reverse_adj_list.end(); ++it) {
+    //     cout << "key: " << it->first << " edges: ";
+    //     for (Graph::Edge edge : it->second) {
+    //         cout << edge.end_ << " ";
+    //     }
+    //     cout << endl;
+    // }
     for (auto it = reverse_adj_list.begin(); it != reverse_adj_list.end(); ++it) {
         reverse_visited.insert({it->first, false});
     }
@@ -66,17 +74,26 @@ vector<vector<Graph::Node>> BFSTraversal(Graph::Node start, Graph * graph) {
     for (auto it = visited.begin(); it != visited.end(); ++it) {
         if (!it->second) {
             vector<Graph::Node> placeholder;
+            // cout << it->first << "node" << endl;
             DFS(it->first, s, adj_list, visited, true, placeholder);
         }
+        
     }
+    // cout << endl;
 
     while (!s.empty()) {
         Graph::Node currNode = s.top();
         s.pop();
 
+        // cout << "Reverse Visited: " << endl;
+        // for (auto it = reverse_visited.begin(); it != reverse_visited.end(); ++it) {
+        //     cout << it->first << ": " << it->second << endl;;
+        // }
+        // cout << "rev currNode: " << currNode << endl;
         if (!reverse_visited.at(currNode)) {
             vector<Graph::Node> scc;
             DFS(currNode, s, reverse_adj_list, reverse_visited, false, scc);
+            sort(scc.begin(), scc.end());
             result.push_back(scc);
         }
     }
@@ -86,7 +103,9 @@ vector<vector<Graph::Node>> BFSTraversal(Graph::Node start, Graph * graph) {
 
 map<Graph::Node, vector<Graph::Edge>> reverseAdjacencyList(map<Graph::Node, vector<Graph::Edge>> & adj_list) {
     map<Graph::Node, vector<Graph::Edge>> reversed;
-
+    for (auto it = adj_list.begin(); it != adj_list.end(); ++it) {
+        reversed.insert({it->first, vector<Graph::Edge>(0)});
+    }
     for (auto it = adj_list.begin(); it != adj_list.end(); ++it) {
         for (Graph::Edge edge : it->second) {
             Graph::Node start = edge.start_;
@@ -105,23 +124,37 @@ map<Graph::Node, vector<Graph::Edge>> reverseAdjacencyList(map<Graph::Node, vect
 }
 
 void DFS(Graph::Node node, stack<Graph::Node> & s, map<Graph::Node, vector<Graph::Edge>> & adj_list, map<Graph::Node, bool> & visited, bool isFirst, vector<Graph::Node> & scc) {
+    // cout << "dfs visited for node: " << node << endl;
     visited.at(node) = true;
+    // cout << "DFS Node: " << node << endl;
 
     if (!isFirst) {
         scc.push_back(node);
     }
 
     vector<Graph::Edge> edges = adj_list.at(node);
+    // cout << "Edges: ";
+    // for (Graph::Edge edge : edges) {
+    //     cout << edge.end_ << " ";
+    // }
+    // cout << endl;
+    // cout << "Visited: " << endl;
+    // for (auto it = visited.begin(); it != visited.end(); ++it) {
+    //     cout << it->first << ": " << it->second << endl;;
+    // }
     for (size_t i = 0; i < edges.size(); i++) {
-        Graph::Node currNeigbor = edges[i].end_;
-        if (!visited.at(currNeigbor)) {
-            DFS(currNeigbor, s, adj_list, visited, isFirst, scc);
+        Graph::Node currNeighbor = edges[i].end_;
+        // cout << "currNeighbor: " << currNeighbor << endl;
+        if (!visited.at(currNeighbor)) {
+            // cout << "i: " << i << endl;
+            DFS(currNeighbor, s, adj_list, visited, isFirst, scc);
         }
     }
     
     if (isFirst) {
         s.push(node);
     }
+    // cout << "end curr dfs cycle" << endl;
 }
 
 map<Graph::Node, float> betweennessCentrality(Graph * graph) {
@@ -131,8 +164,18 @@ map<Graph::Node, float> betweennessCentrality(Graph * graph) {
         betweenness.insert({it->first, 0.0});
     }
     int num_paths = 0;
+    int count = 0;
     for (auto start = betweenness.begin(); start != betweenness.end(); ++start) {
         map<Graph::Node, vector<Graph::Node>> paths_from = shortestPath(start->first, graph);
+        if (count == 0) {
+            for (auto it = paths_from.begin(); it != paths_from.end(); ++it) {
+                std::cout << it->first;
+                for (Graph::Node node : it->second) {
+                    std::cout << node;
+                }
+                std::cout << std::endl;
+            }
+        }
         for (auto it = paths_from.begin(); it != paths_from.end(); ++it) {
             if (it->second.size() == 2) {
                 num_paths++;
@@ -143,11 +186,13 @@ map<Graph::Node, float> betweennessCentrality(Graph * graph) {
                 }
             }
         }
+        count++;
     }
 
     for (auto start = betweenness.begin(); start != betweenness.end(); ++start) {
         start->second /= num_paths;
     }
+
     return betweenness;
 }   
 
@@ -185,6 +230,6 @@ map<Graph::Node, vector<Graph::Node>> shortestPath(Graph::Node start, Graph * gr
             it->second.push_back(it->first);
         }
     }
+    
     return all_paths;
 }
-
