@@ -24,6 +24,7 @@ vector<Graph::Node> BFSTraversal(Graph::Node start, map<Graph::Node, vector<Grap
             }
         }
     }
+
     return result;
 }
 
@@ -104,9 +105,7 @@ map<Graph::Node, vector<Graph::Edge>> reverseAdjacencyList(map<Graph::Node, vect
         for (Graph::Edge edge : it->second) {
             Graph::Node start = edge.start_;
             Graph::Node end = edge.end_;
-            // if (!(reversed.count(end))) { // key doesnt exists
-            //     reversed.insert({end, vector<Graph::Edge>(0)});
-            // }
+
             Graph::Edge e;
             e.start_ = end;
             e.end_ = start;
@@ -215,18 +214,3 @@ map<Graph::Node, vector<Graph::Node>> shortestPath(Graph::Node start, Graph * gr
     
     return all_paths;
 }
-
-// map<Graph::Node, vector<vector<Graph::Node>>> getAllShortestPaths(Graph::Node start, Graph * graph) {
-//     map<Graph::Node, bool> visited;
-//     map<Graph::Node, vector<Graph::Edge>> adj_list = graph->getAdjacencyList();
-//     vector<Graph::Node> path;
-//     map<Graph::Node, vector<vector<Graph::Node>>> all_paths;
-//     for (auto it = adj_list.begin(); it != adj_list.end(); ++it) {
-//         visited.insert({it->first, false});
-//         all_paths.insert({it->first, vector<vector<Graph::Node>>()});
-//     }
-    
-//     queue<Graph::Node> q;
-//     q.push(start);
-//     visited.at(start) = true;
-// }

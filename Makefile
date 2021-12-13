@@ -1,4 +1,4 @@
-EXENAME = final_project
+EXENAME = main
 OBJS = main.o graph.o algorithms.o
 
 CXX = clang++

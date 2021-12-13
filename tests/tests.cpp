@@ -101,22 +101,23 @@ TEST_CASE("Kosaraju's on a graph with a single node", "[kosaraju]") {
 }
 
 //Betweeness-Centrality Tests
- TEST_CASE("Betweenness Centrality on a connected graph", "[betweenness]") {
-     Graph * g = new Graph("./tests/test_data_small_connected.txt");
-     vector<float> expected = {0,0,0.307692,0, 0};
-     map<Graph::Node, float> actual= betweennessCentrality(g);
-     bool check = true;
-     float EPSILON = 0.00001;
-     for (int i = 0; i < 5; i++) {
-         
-         Graph::Node n = std::to_string(i);
-         if (abs(actual.at(n) - expected[i]) > EPSILON) {
-             check = false;
-         }
-     }
-     REQUIRE(check == true);
+TEST_CASE("Betweenness Centrality on a connected graph", "[betweenness]") {
+    Graph * g = new Graph("./tests/test_data_small_connected.txt");
+    vector<float> expected = {0,0,0.307692,0, 0};
+    map<Graph::Node, float> actual= betweennessCentrality(g);
+    bool check = true;
+    float EPSILON = 0.00001;
+    for (int i = 0; i < 5; i++) {
+        
+        Graph::Node n = std::to_string(i);
+        if (abs(actual.at(n) - expected[i]) > EPSILON) {
+            check = false;
+        }
+    }
+    
+    REQUIRE(check == true);
 
- }
+}
 
 TEST_CASE("Betweenness Centrality on disconnected graph", "[betweenness]") {
     Graph * g = new Graph("./tests/test_data_small_disconnected.txt");
@@ -130,6 +131,6 @@ TEST_CASE("Betweenness Centrality on disconnected graph", "[betweenness]") {
              check = false;
          }
      }
+
      REQUIRE(check == true);
 }
-
