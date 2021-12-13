@@ -12,17 +12,6 @@ typedef string Node;
 
 using namespace std;
 
-TEST_CASE("Edge") {
-    Graph::Edge edge1;
-    edge1.start_ = "1";
-    edge1.end_ = "2";
-    Graph::Edge edge2;
-    edge2.start_ = "1";
-    edge2.end_ = "2";
-
-    REQUIRE(edge1 == edge2);
-}
-
 // Graph Creation Tests
 TEST_CASE("Graph properly created", "[graph]") {
     Graph * g = new Graph("./tests/test_graph_data.txt");
@@ -34,6 +23,37 @@ TEST_CASE("Graph properly created", "[graph]") {
 
 TEST_CASE("Invalid file should throw error", "[graph]") {
     REQUIRE_THROWS(new Graph("./tests/test_malformed_data.txt"));
+}
+
+TEST_CASE("Empty file should throw error", "[graph]") {
+    REQUIRE_THROWS(new Graph("./tests/test_empty_data.txt"));
+}
+
+// Graph Equality Tests
+TEST_CASE("Graph equality") {
+    Graph * g1 = new Graph("./tests/test_graph_data.txt");
+    Graph * g2 = new Graph("./tests/test_graph_data.txt");
+
+    REQUIRE(*(g1) == *(g2));
+}
+
+TEST_CASE("Graph inequality") {
+    Graph * g1 = new Graph("./tests/test_graph_data.txt");
+    Graph * g2 = new Graph("./tests/test_data_single.txt");
+
+    REQUIRE(*(g1) != *(g2));
+}
+
+// Edge Equality Tests
+TEST_CASE("Edge Equality") {
+    Graph::Edge edge1;
+    edge1.start_ = "1";
+    edge1.end_ = "2";
+    Graph::Edge edge2;
+    edge2.start_ = "1";
+    edge2.end_ = "2";
+
+    REQUIRE(edge1 == edge2);
 }
 
 // BFS Traversal Tests
@@ -80,13 +100,36 @@ TEST_CASE("Kosaraju's on a graph with a single node", "[kosaraju]") {
     REQUIRE(expected == kosaraju(g));
 }
 
-// Betweeness-Centrality Tests
-TEST_CASE("Betweenness Centrality on connected graph", "[betweenness]") {
-    Graph * g = new Graph("./tests/test_data_small_connected_betweenness.txt");
-    // map<Graph::Node, float> expected;
+//Betweeness-Centrality Tests
+ TEST_CASE("Betweenness Centrality on a connected graph", "[betweenness]") {
+     Graph * g = new Graph("./tests/test_data_small_connected.txt");
+     vector<float> expected = {0,0,0.307692,0, 0};
+     map<Graph::Node, float> actual= betweennessCentrality(g);
+     bool check = true;
+     float EPSILON = 0.00001;
+     for (int i = 0; i < 5; i++) {
+         
+         Graph::Node n = std::to_string(i);
+         if (abs(actual.at(n) - expected[i]) > EPSILON) {
+             check = false;
+         }
+     }
+     REQUIRE(check == true);
 
-     map<Graph::Node, float> between = betweennessCentrality(g);
-     for (auto it = between.begin(); it != between.end(); ++it) {
-        cout << "Value of " << it->first << ": " << it->second << endl;
-    }
+ }
+
+TEST_CASE("Betweenness Centrality on disconnected graph", "[betweenness]") {
+    Graph * g = new Graph("./tests/test_data_small_disconnected.txt");
+     vector<float> expected = {0,0,0.285714,0,0,0};
+     map<Graph::Node, float> actual= betweennessCentrality(g);
+     bool check = true;
+     float EPSILON = 0.00001;
+     for (int i = 0; i < 7; i++) {
+         Graph::Node n = std::to_string(i);
+         if (abs(actual.at(n) - expected[i]) > EPSILON) {
+             check = false;
+         }
+     }
+     REQUIRE(check == true);
 }
+
