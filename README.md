@@ -1,5 +1,14 @@
 # Wikipedia Hyperlink Network Analyzer
 
+## Table of Contents
+
+- [Authors](#authors)
+- [Documentation](#documentation)
+- [Installation](#installation)
+- [Running Tests](#runningtests)
+- [Usage/Examples](#usage/examples)
+- [Results](#results)
+
 
 ## Authors
 
