@@ -5,8 +5,8 @@
 - [Authors](#authors)
 - [Documentation](#documentation)
 - [Installation](#installation)
-- [Running Tests](#runningtests)
-- [Usage/Examples](#usage/examples)
+- [Running Tests](#running-tests)
+- [Usage/Examples](#usageexamples)
 - [Results](#results)
 
 
